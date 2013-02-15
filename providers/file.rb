@@ -68,7 +68,7 @@ action :remove do
 end
 
 private
-# The block size (1GB)
+# The block size (1MB)
 def block_size
   1048576
 end

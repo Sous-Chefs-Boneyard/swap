@@ -7,7 +7,7 @@ Usage
 Add a new swap:
 ```ruby
 swap_file '/mnt/swap' do
-  size      5    # GBs
+  size      1024    # MBs
 end
 ```
 
@@ -34,8 +34,8 @@ end
   </tr>
   <tr>
     <td>size</td>
-    <td>The size (in GBs) for the swap file</td>
-    <td>2</td>
+    <td>The size (in MBs) for the swap file</td>
+    <td>2048</td>
     <td></td>
   </tr>
 </table>
