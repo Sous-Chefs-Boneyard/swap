@@ -18,7 +18,11 @@
 # limitations under the License.
 #
 
+# The block size (1MB)
+block_size = 1048576
+
 # Creates a swap file of the given size and the given path
+
 action :create do
   bash "create swapfile #{new_resource.path}" do
     code "dd if=/dev/zero of=#{new_resource.path} bs=#{block_size} count=#{new_resource.size}"
@@ -65,10 +69,4 @@ action :remove do
     code          "swapoff #{new_resource.path}"
     notifices     :delete, "file[#{new_resource.name}]"
   end
-end
-
-private
-# The block size (1MB)
-def block_size
-  1048576
 end
