@@ -21,11 +21,8 @@
 # Creates a swap file of the given size and the given path
 action :create do
   bash "create swapfile #{new_resource.path}" do
-    code "dd if=/dev/zero of=#{new_resource.path} bs=#{block_size} count=#{new_resource.size}"
-    not_if {
-      ::File.exists?(new_resource.path) &&
-      ::File.size?(new_resource.path).to_i/block_size == new_resource.size
-    }
+    code          "dd if=/dev/zero of=#{new_resource.path} bs=#{block_size} count=#{new_resource.size}"
+    not_if        { swap_exists? }
   end
 
   file new_resource.path do
@@ -45,7 +42,7 @@ action :create do
     code          "mkswap -f #{new_resource.path}"
     action        :nothing
     subscribes    :run, "bash[create swapfile #{new_resource.path}]"
-    notifies      :run, "bash[create swapfile #{new_resource.path}]"
+    notifies      :run, "bash[swapon #{new_resource.path}]"
   end
 
   mount '/dev/null' do
@@ -63,12 +60,17 @@ action :remove do
 
   bash "swapoff #{new_resource.path}" do
     code          "swapoff #{new_resource.path}"
-    notifices     :delete, "file[#{new_resource.name}]"
+    notifies      :delete, "file[#{new_resource.name}]"
+    only_if       { swap_exists? }
   end
 end
 
-private
+protected
 # The block size (1MB)
 def block_size
   1048576
+end
+
+def swap_exists?
+  ::File.exists?(new_resource.path) && ::File.size?(new_resource.path).to_i/block_size == new_resource.size
 end
