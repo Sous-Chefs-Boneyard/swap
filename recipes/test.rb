@@ -7,5 +7,4 @@ end
 
 swap_file "/swapfile" do
   action :remove
-  size 1024
 end

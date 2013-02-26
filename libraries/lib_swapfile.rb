@@ -12,7 +12,7 @@ module Swapfile
 
     def swap_creation_command(nr)
       size = block_size * nr.size
-      if compatible_filesystem?(nr) && compatible_kernel
+      if compatible_filesystem?(nr) && compatible_kernel(nr)
         command = "fallocate -l #{size} #{nr.path}"
       else
         command = "dd if=/dev/zero of=#{nr.path} bs=#{block_size} count=#{nr.size}"
@@ -21,9 +21,10 @@ module Swapfile
       command
     end
 
-    def compatible_kernel
+    def compatible_kernel(nr)
       fallocate_location = %x[which fallocate]
-      ::File.exists?(fallocate_location)
+      Chef::Log.debug("#{nr} fallocate location is '#{fallocate_location}'")
+      ::File.exists?(fallocate_location.chomp)
     end
 
     def compatible_filesystem?(nr)
@@ -38,3 +39,5 @@ module Swapfile
 
   end
 end
+
+self.class.send(:include, Swapfile::Helpers)

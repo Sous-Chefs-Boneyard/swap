@@ -21,10 +21,6 @@
 # Creates a swap file of the given size and the given path
 action :create do
 
-  class Chef::Provider
-    include Swapfile::Helpers
-  end
-
   swapfile_command = swap_creation_command(new_resource)
 
   bash "create swapfile #{new_resource.path}" do
