@@ -1,6 +1,3 @@
-#
-#::Chef::Recipe.send(:include, Opscode::PostgresqlHelpers)
-
 module Swapfile
   module Helpers
 
@@ -25,7 +22,8 @@ module Swapfile
     end
 
     def compatible_kernel
-      ::File.exists?('/usr/bin/fallocate')
+      fallocate_location = %x[which fallocate]
+      ::File.exists?(fallocate_location)
     end
 
     def compatible_filesystem?(nr)
