@@ -20,9 +20,16 @@
 
 # Creates a swap file of the given size and the given path
 action :create do
+
+  class Chef::Provider
+    include Swapfile::Helpers
+  end
+
+  swapfile_command = swap_creation_command(new_resource)
+
   bash "create swapfile #{new_resource.path}" do
-    code          "dd if=/dev/zero of=#{new_resource.path} bs=#{block_size} count=#{new_resource.size}"
-    not_if        { swap_exists? }
+    code          swapfile_command
+    not_if        { swap_exists?(new_resource) }
   end
 
   file new_resource.path do
@@ -30,7 +37,7 @@ action :create do
     group         'root'
     mode          '0600'
     action        :nothing
-    subscribes    :create, "bash[create swapfile #{new_resource.path}]"
+    subscribes    :create, "bash[create swapfile #{new_resource.path}]", :immediately
   end
 
   bash "swapon #{new_resource.path}" do
@@ -41,8 +48,8 @@ action :create do
   bash "mkswap #{new_resource.path}" do
     code          "mkswap -f #{new_resource.path}"
     action        :nothing
-    subscribes    :run, "bash[create swapfile #{new_resource.path}]"
-    notifies      :run, "bash[swapon #{new_resource.path}]"
+    subscribes    :run, "bash[create swapfile #{new_resource.path}]", :immediately
+    notifies      :run, "bash[swapon #{new_resource.path}]", :immediately
   end
 
   mount '/dev/null' do
@@ -50,6 +57,9 @@ action :create do
     device        new_resource.path
     fstype        'swap'
   end
+
+  new_resource.updated_by_last_action(true)
+
 end
 
 # Deletes the swap file at the given path
@@ -61,16 +71,9 @@ action :remove do
   bash "swapoff #{new_resource.path}" do
     code          "swapoff #{new_resource.path}"
     notifies      :delete, "file[#{new_resource.name}]"
-    only_if       { swap_exists? }
+    only_if       { swap_exists?(new_resource) }
   end
-end
 
-protected
-# The block size (1MB)
-def block_size
-  1048576
-end
+  new_resource.updated_by_last_action(true)
 
-def swap_exists?
-  ::File.exists?(new_resource.path) && ::File.size?(new_resource.path).to_i/block_size == new_resource.size
 end
