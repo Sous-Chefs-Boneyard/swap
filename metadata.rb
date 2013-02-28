@@ -1,3 +1,5 @@
+name "swap"
+
 maintainer 'Seth Vargo'
 maintainer_email 'sethvargo@gmail.com'
 license 'Apache 2.0'
