@@ -7,17 +7,45 @@ module Swapfile
     end
 
     def swap_exists?(nr)
-      ::File.exists?(nr.path) && ::File.size?(nr.path).to_i/block_size == nr.size
+      command = "grep #{nr.path} /proc/swaps"
+      result = %x[#{command}]
+      does_swap_exist = ! result.empty?
+      Chef::Log.debug("#{nr} Swap Exists? #{does_swap_exist}")
+      does_swap_exist
     end
 
     def swap_creation_command(nr)
-      size = block_size * nr.size
       if compatible_filesystem?(nr) && compatible_kernel(nr)
-        command = "fallocate -l #{size} #{nr.path}"
+        command = _get_fallocate_command(nr)
       else
-        command = "dd if=/dev/zero of=#{nr.path} bs=#{block_size} count=#{nr.size}"
+        command = _get_dd_command(nr)
       end
       Chef::Log.debug("#{nr} swap creation command is '#{command}'")
+      command
+    end
+
+    def fallback_swap_creation_command(nr)
+      command = _get_dd_command(nr)
+      Chef::Log.debug("#{nr} fallback swap creation command is '#{command}'")
+      command
+    end
+
+    def _get_fallocate_size(nr)
+      size = block_size * nr.size
+      Chef::Log.debug("#{nr} fallocate size is #{size}")
+      size
+    end
+
+    def _get_fallocate_command(nr)
+      size = _get_fallocate_size(nr)
+      command = "fallocate -l #{size} #{nr.path}"
+      Chef::Log.debug("#{nr} fallocate command is '#{command}'")
+      command
+    end
+
+    def _get_dd_command(nr)
+      command = "dd if=/dev/zero of=#{nr.path} bs=#{block_size} count=#{nr.size}"
+      Chef::Log.debug("#{nr} dd command is '#{command}'")
       command
     end
 
