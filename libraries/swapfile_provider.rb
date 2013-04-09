@@ -2,12 +2,12 @@ require 'chef/mixin/shell_out'
 
 class Chef
   class Provider
-    class Swap < Chef::Provider
+    class SwapFile < Chef::Provider
 
       include Chef::Mixin::ShellOut
 
       def load_current_resource
-        @current_resource ||= Chef::Resource::Swap.new(new_resource.name)
+        @current_resource ||= Chef::Resource::SwapFile.new(new_resource.name)
         @current_resource.path(new_resource.path)
         @current_resource.size(new_resource.size)
         @current_resource
@@ -60,7 +60,6 @@ class Chef
       def swapon
         shell_out!("swapon #{@new_resource.path}")
         Chef::Log.info("#{@new_resource} Swap enabled for #{@new_resource.path}")
-        @new_resource.enabled(true)
       end
 
       def swapoff
