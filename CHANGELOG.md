@@ -2,15 +2,25 @@ CHANGELOG for swap
 ==================
 This file is used to list changes made in each version of swap.
 
-0.2.0
------
+v0.3.0
+------
+- Integrate test-kitchen
+- Integrate foodcritic
+- Integrate chefspec
+- Integrate strainer
+- Integrate knife testing
+- Add travis support
+- Add `persist` key to write to `fstab`
+
+v0.2.0
+------
 - Use fallocate if available - @andrewgross
 - Small code restructure
 
-0.1.1
------
+v0.1.1
+------
 - Fix error in documentation (it's MB, not GB) (@dougal)
 
-0.1.0
------
+v0.1.0
+------
 - Initial release

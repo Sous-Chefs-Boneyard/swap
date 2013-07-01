@@ -3,13 +3,13 @@ require 'chef/mixin/shell_out'
 class Chef
   class Provider
     class SwapFile < Chef::Provider
-
       include Chef::Mixin::ShellOut
 
       def load_current_resource
         @current_resource ||= Chef::Resource::SwapFile.new(new_resource.name)
         @current_resource.path(new_resource.path)
         @current_resource.size(new_resource.size)
+        @current_resource.persist(!!new_resource.persist)
         @current_resource
       end
 
@@ -23,7 +23,8 @@ class Chef
             create_swapfile(command)
             set_permissions
             mkswap
-            swapon  
+            swapon
+            persist if persist?
           rescue Mixlib::ShellOut::ShellCommandFailed => e
             Chef::Log.info("#{@new_resource} Rescuing failed swapfile creation for #{@new_resource.path}")
             Chef::Log.debug("#{@new_resource} Exception when creating swapfile #{@new_resource.path}: #{e}")
@@ -138,6 +139,19 @@ class Chef
           result = %x[#{command}]
           Chef::Log.debug("#{@new_resource} filesystem listing is '#{result}'")
           compatible_filesystems.any? { |fs| result.include? fs }
+        end
+
+        def persist?
+          !!@new_resource.persist
+        end
+
+        def persist
+          line = "#{@new_resource.path} swap swap defaults 0 0"
+          file = Chef::Util::FileEdit.new('/etc/fstab')
+
+          file.search_file_delete_line(line)
+          file.insert_line_after_match(/\Z/, line)
+          file.write_file
         end
 
     end
