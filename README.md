@@ -2,6 +2,7 @@ Swap LWRP
 =========
 This cookbook provides an LWRP for easily creating and managing swap files.
 
+
 Usage
 -----
 Add a new swap:
@@ -38,10 +39,17 @@ end
     <td>2048</td>
     <td></td>
   </tr>
+  <tr>
+    <td>persist</td>
+    <td>Persist the swapon</td>
+    <td>true</td>
+    <td>false</td>
+  </tr>
 </table>
 
-Usage
------
+
+Installation
+------------
 If you're using [berkshelf](https://github.com/RiotGames/berkshelf), add `swap` to your `Berksfile`:
 
 ```ruby
@@ -60,6 +68,7 @@ depends 'swap'
 
 Now you can use the LWRP in your cookbook!
 
+
 Contributing
 ------------
 1. Fork the project
@@ -67,6 +76,7 @@ Contributing
 3. Commit and test thoroughly
 4. Create a Pull Request on github
     - ensure you add a detailed description of your changes
+
 
 License and Authors
 -------------------
