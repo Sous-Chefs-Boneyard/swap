@@ -20,18 +20,11 @@ class Chef
           Chef::Log.debug("#{@new_resource} already created - nothing to do")
         else
           begin
-            create_swapfile(command)
-            set_permissions
-            mkswap
-            swapon
-            persist if persist?
+            do_create(command)
           rescue Mixlib::ShellOut::ShellCommandFailed => e
             Chef::Log.info("#{@new_resource} Rescuing failed swapfile creation for #{@new_resource.path}")
             Chef::Log.debug("#{@new_resource} Exception when creating swapfile #{@new_resource.path}: #{e}")
-            create_swapfile(fallback_command)
-            set_permissions
-            mkswap
-            swapon
+            do_create(fallback_command)
           end
         end
       end
@@ -42,6 +35,14 @@ class Chef
       end
 
       protected
+
+        def do_create(command)
+          create_swapfile(command)
+          set_permissions
+          mkswap
+          swapon
+          persist if persist?
+        end
 
         def create_swapfile(command)
           shell_out!(command)
