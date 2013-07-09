@@ -1,3 +1,4 @@
+require 'fileutils'
 require 'chef/mixin/shell_out'
 
 class Chef
@@ -147,12 +148,18 @@ class Chef
         end
 
         def persist
-          line = "#{@new_resource.path} swap swap defaults 0 0"
-          file = Chef::Util::FileEdit.new('/etc/fstab')
+          fstab = '/etc/fstab'
+          contents = File.readlines(fstab)
+          addition = "#{@new_resource.path} swap swap defaults 0 0"
 
-          file.search_file_delete_line(line)
-          file.insert_line_after_match(/\Z/, line)
-          file.write_file
+          contents.delete_if { |line| line.match(addition) }
+          contents << addition
+
+          if File.read(fstab) != contents.join
+            Chef::Log.info("#{@new_resource} Adding config entry to #{fstab.inspect} for #{@new_resource.path}")
+            FileUtils.cp(fstab, "#{fstab}.old", :preserve => true)
+            File.open(fstab, 'w') { |f| f.write(contents.join) }
+          end
         end
 
     end
