@@ -149,7 +149,7 @@ class Chef
 
         def persist
           fstab = '/etc/fstab'
-          contents = File.readlines(fstab)
+          contents = ::File.readlines(fstab)
           addition = "#{@new_resource.path} swap swap defaults 0 0"
 
           if contents.any? { |line| line.strip == addition }
