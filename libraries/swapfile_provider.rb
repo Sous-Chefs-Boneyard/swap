@@ -158,7 +158,7 @@ class Chef
             Chef::Log.info("#{@new_resource} adding entry to #{fstab} for #{@new_resource.path}")
 
             contents << "#{addition}\n"
-            ::File.open(fstab, 'w') { |f| f.write(contents.join) }
+            ::File.open(fstab, 'w') { |f| f.write(contents.join('')) }
           end
         end
 
