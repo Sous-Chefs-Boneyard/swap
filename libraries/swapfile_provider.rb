@@ -152,16 +152,13 @@ class Chef
           contents = ::File.readlines(fstab)
           addition = "#{@new_resource.path} swap swap defaults 0 0"
 
-          if contents.any? { |line| line.strip == addition }
+          if contents.grep %r[^#{addition}]
             Chef::Log.debug("#{@new_resource} already added to /etc/fstab - skipping")
           else
             Chef::Log.info("#{@new_resource} adding entry to #{fstab} for #{@new_resource.path}")
 
             contents << addition
-            contents.reject! { |line| line.strip.empty? }
-            ::File.open(fstab, 'w') do |f|
-              f.write(contents.join("\n") + "\n")
-            end
+            ::File.open(fstab, 'w') { |f| f.write(contents.join) }
           end
         end
 
