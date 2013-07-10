@@ -159,7 +159,7 @@ class Chef
 
             contents << addition
             contents.reject! { |line| line.strip.empty? }
-            File.open(fstab, 'w') do |f|
+            ::File.open(fstab, 'w') do |f|
               f.write(contents.join("\n") + "\n")
             end
           end
