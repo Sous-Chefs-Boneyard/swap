@@ -1,2 +1,5 @@
 .kitchen/
 .kitchen.local.yml
+
+Berkshelf.lock
+Gemfile.lock
