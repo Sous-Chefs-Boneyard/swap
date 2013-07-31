@@ -1,23 +1,13 @@
-<%
-def opscode_box(type)
-  "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_#{type}_provisionerless.box"
-end
-%>
-
 driver_plugin: vagrant
 driver_config:
   require_chef_omnibus: true
 
 platforms:
+  - name: ubuntu-10.04
   - name: ubuntu-12.04
-    driver_config:
-      box: opscode-ubuntu-12.04
-      box_url: <%= opscode_box('ubuntu-12.04') %>
-
+  - name: ubuntu-13.04
+  - name: centos-5.9
   - name: centos-6.4
-    driver_config:
-      box: opscode-centos-6.4
-      box_url: <%= opscode_box('centos-6.4') %>
 
 suites:
   - name: create
