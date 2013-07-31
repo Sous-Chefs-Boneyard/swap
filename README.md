@@ -6,6 +6,7 @@ Swap LWRP
 
 This cookbook provides an LWRP for easily creating and managing swap files.
 
+**This cookbook requires Ruby 1.9 or higher!**
 
 Usage
 -----
