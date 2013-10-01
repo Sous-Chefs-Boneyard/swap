@@ -128,7 +128,7 @@ class Chef
         end
 
         def compatible_kernel
-          fallocate_location = %x[which fallocate]
+          fallocate_location = shell_out('which fallocate')
           Chef::Log.debug("#{@new_resource} fallocate location is '#{fallocate_location}'")
           ::File.exists?(fallocate_location.chomp)
         end
@@ -138,7 +138,7 @@ class Chef
           parent_directory = ::File.dirname(@new_resource.path)
           # Get FS info, get second line as first is column headings
           command = "df -T #{parent_directory} | awk 'NR==2 {print $2}'"
-          result = %x[#{command}]
+          result = shell_out(command)
           Chef::Log.debug("#{@new_resource} filesystem listing is '#{result}'")
           compatible_filesystems.any? { |fs| result.include? fs }
         end
