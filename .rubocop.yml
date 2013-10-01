@@ -4,6 +4,8 @@ AllCops:
 
 Documentation:
   Enabled: false
+Encoding:
+  Enabled: false
 LineLength:
   Max: 120
 MethodLength:
