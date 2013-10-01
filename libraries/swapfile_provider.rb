@@ -1,3 +1,23 @@
+#
+# Author:: Seth Vargo <sethvargo@gmail.com>
+# Library:: swapfile_provider
+# Resource:: file
+#
+# Copyright 2012-2013, Seth Vargo
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
 require 'fileutils'
 require 'chef/mixin/shell_out'
 
@@ -52,7 +72,7 @@ class Chef
         end
 
         def set_permissions
-          permissions = "600"
+          permissions = '600'
           shell_out!("chmod #{permissions} #{@new_resource.path}")
           Chef::Log.info("#{@new_resource} Set permissions on #{@new_resource.path} to #{permissions}")
         end
@@ -78,7 +98,7 @@ class Chef
         end
 
         def swap_enabled?
-          enabled_swapfiles = shell_out("swapon --summary").stdout
+          enabled_swapfiles = shell_out('swapon --summary').stdout
           # Regex for our resource path and only our resource path
           # It will terminate on whitespace after the path it match
           # /testswapfile would match
@@ -105,7 +125,7 @@ class Chef
 
         # The block size (1MB)
         def block_size
-          1048576
+          1_048_576
         end
 
         def get_fallocate_size
@@ -128,17 +148,17 @@ class Chef
         end
 
         def compatible_kernel
-          fallocate_location = shell_out('which fallocate')
+          fallocate_location = shell_out('which fallocate').stdout
           Chef::Log.debug("#{@new_resource} fallocate location is '#{fallocate_location}'")
           ::File.exists?(fallocate_location.chomp)
         end
 
         def compatible_filesystem?
-          compatible_filesystems = ['xfs', 'ext4']
+          compatible_filesystems = %w(xfs ext4)
           parent_directory = ::File.dirname(@new_resource.path)
           # Get FS info, get second line as first is column headings
           command = "df -T #{parent_directory} | awk 'NR==2 {print $2}'"
-          result = shell_out(command)
+          result = shell_out(command).stdout
           Chef::Log.debug("#{@new_resource} filesystem listing is '#{result}'")
           compatible_filesystems.any? { |fs| result.include? fs }
         end

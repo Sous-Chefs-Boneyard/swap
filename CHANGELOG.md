@@ -1,5 +1,8 @@
-CHANGELOG for swap
-==================
+swap Cookbook CHANGELOG
+=======================
+This file is used to list changes made in each version of the swap cookbook.
+
+
 v0.3.1
 ------
 - **CHANGELOG is deprecated - see [releases](https://github.com/sethvargo-cookbooks/swap/releases)**

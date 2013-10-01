@@ -1,6 +1,8 @@
 driver_plugin: vagrant
 driver_config:
   require_chef_omnibus: true
+  customize:
+    memory: 1024
 
 platforms:
   - name: ubuntu-10.04
@@ -11,8 +13,11 @@ platforms:
 
 suites:
   - name: create
-    run_list: ['recipe[fake::create]']
+    run_list:
+      - recipe[fake::create]
   - name: presist
-    run_list: ['recipe[fake::persist]']
+    run_list:
+      - recipe[fake::persist]
   - name: remove
-    run_list: ['recipe[fake::remove]']
+    run_list:
+      - recipe[fake::remove]

@@ -1,0 +1,10 @@
+AllCops:
+  Excludes:
+    - vendor/**
+
+Documentation:
+  Enabled: false
+LineLength:
+  Max: 120
+MethodLength:
+  Max: 20
