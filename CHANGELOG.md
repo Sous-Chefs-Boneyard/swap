@@ -3,6 +3,11 @@ swap Cookbook CHANGELOG
 This file is used to list changes made in each version of the swap cookbook.
 
 
+v0.3.6
+------
+- Remove `size` as a required attribute, since it doesn't make sense to require it during the "remove" action
+
+
 v0.3.1
 ------
 - **CHANGELOG is deprecated - see [releases](https://github.com/sethvargo-cookbooks/swap/releases)**
