@@ -73,6 +73,27 @@ depends 'swap'
 
 Now you can use the LWRP in your cookbook!
 
+ChefSpec matchers
+-----------------
+
+### create_swap_file(path)
+
+Assert that the Chef run creates swap_file.
+
+```ruby
+expect(chef_run).to create_swap_file(path).with(
+  :size => 1024
+)
+```
+
+### remove_swap_file(path)
+
+Assert that the Chef run removes swap_file.
+
+```ruby
+expect(chef_run).to remove_swap_file(path)
+```
+
 
 Contributing
 ------------
