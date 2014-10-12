@@ -2,7 +2,11 @@ AllCops:
   Excludes:
     - vendor/**
 
+ClassLength:
+  Enabled: false
 Documentation:
+  Enabled: false
+DoubleNegation:
   Enabled: false
 Encoding:
   Enabled: false
