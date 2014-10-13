@@ -131,7 +131,7 @@ class Chef
       end
 
       def fallocate_command
-        size = get_fallocate_size
+        size = fallocate_size
         command = "fallocate -l #{size} #{@new_resource.path}"
         Chef::Log.debug("#{@new_resource} fallocate command is '#{command}'")
         command
