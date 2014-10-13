@@ -2,6 +2,10 @@ swap Cookbook CHANGELOG
 =======================
 This file is used to list changes made in each version of the swap cookbook.
 
+v0.3.8
+------
+- Missing missing method name get_fallocate_command
+
 v0.3.7
 ------
 - Updated to latest test harness
