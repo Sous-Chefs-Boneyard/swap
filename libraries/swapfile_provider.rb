@@ -153,7 +153,7 @@ class Chef
         compatible_filesystems = %w(xfs ext4)
         parent_directory = ::File.dirname(@new_resource.path)
         # Get FS info, get second line as first is column headings
-        command = "df -T #{parent_directory} | awk 'NR==2 {print $2}'"
+        command = "df -PT #{parent_directory} | awk 'NR==2 {print $2}'"
         result = shell_out(command).stdout
         Chef::Log.debug("#{@new_resource} filesystem listing is '#{result}'")
         compatible_filesystems.any? { |fs| result.include? fs }
