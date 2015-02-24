@@ -183,13 +183,13 @@ class Chef
       # Link: https://help.ubuntu.com/community/SwapFaq#What_is_swappiness_and_how_do_I_change_it.3F
       # Link: https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/6/html/Performance_Tuning_Guide/s-memory-tunables.html
       def swappiness
-        proc_command = "echo 10 > /proc/sys/vm/swappiness"
+        proc_command = 'echo 10 > /proc/sys/vm/swappiness'
         Chef::Log.info("#{@new_resource} is setting swappiness value in '/proc/sys/vm/swappiness'")
         shell_out!(proc_command)
 
-        sysctl = "/etc/sysctl.conf"
+        sysctl = '/etc/sysctl.conf'
         contents = ::File.readlines(sysctl)
-        addition = "vm.swappiness = 10"
+        addition = 'vm.swappiness = 10'
 
         if contents.any? { |line| line.strip == addition }
           Chef::Log.debug("#{@new_resource} already added to /etc/sysctl.conf - skipping")
