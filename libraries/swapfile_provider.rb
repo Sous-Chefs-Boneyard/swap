@@ -189,8 +189,6 @@ class Chef
         sysctl_command = '/sbin/sysctl vm.swappiness=10'
         Chef::Log.info("#{@new_resource} is setting swappiness value using sysctl.")
         shell_out!(sysctl_command)
-
-        end
       end
     end
   end
