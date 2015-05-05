@@ -47,8 +47,8 @@ class Chef
       end
 
       def action_remove
-        swapoff
-        remove_swapfile
+        swapoff if swap_enabled?
+        remove_swapfile if ::File.exist?(@new_resource.path)
       end
 
       protected
