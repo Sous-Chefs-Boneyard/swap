@@ -19,7 +19,7 @@ require 'chef/mixin/shell_out'
 
 class Chef
   class Provider
-    class SwapFile < Chef::Provider
+    class SwapFile < Chef::Provider::LWRPBase
       include Chef::Mixin::ShellOut
 
       def load_current_resource
