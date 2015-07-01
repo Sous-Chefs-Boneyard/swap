@@ -22,6 +22,9 @@ class Chef
     class SwapFile < Chef::Provider
       include Chef::Mixin::ShellOut
 
+      # Fix Chef 12.4.0 support (issue #22)
+      provides :swap_file if Chef::Provider.respond_to?(:provides)
+
       def load_current_resource
         @current_resource ||= Chef::Resource::SwapFile.new(new_resource.name)
         @current_resource.path(new_resource.path)
