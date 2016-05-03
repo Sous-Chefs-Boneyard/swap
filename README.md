@@ -16,7 +16,13 @@ swap_file '/mnt/swap' do
   size      1024    # MBs
 end
 ```
-
+Add a new swap for aix:
+```ruby
+swap_file 'paging00' do
+  size      1024    # MBs
+  from_vg   testvg  # Must specify volume group for AIX
+end
+```
 Or remove an existing one:
 ```ruby
 swap_file '/mnt/swap' do
@@ -49,6 +55,12 @@ end
     <td>Persist the swapon</td>
     <td>true</td>
     <td>false</td>
+  </tr>
+    <tr>
+    <td>from_vg</td>
+    <td>VG from which to create swap in AIX</td>
+    <td>testvg</td>
+    <td></td>
   </tr>
 </table>
 
@@ -107,6 +119,7 @@ Contributing
 License and Authors
 -------------------
 - Author:: Seth Vargo (sethvargo@gmail.com)
+- Author:: Alan Thatcher (alanwthatcher@gmail.com)
 
 ```text
 Copyright 2012-2013, Seth Vargo

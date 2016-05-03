@@ -36,38 +36,51 @@ class Chef
       def action_create
         command = swap_creation_command
         fallback_command = fallback_swap_creation_command
-        if swap_enabled?
-          Chef::Log.debug("#{@new_resource} already created - nothing to do")
+        if aix?
+          swapon if aix_dev_exist? && !swap_enabled? 
+          do_create(command) unless aix_dev_exist?
         else
-          begin
-            do_create(command)
-          rescue Mixlib::ShellOut::ShellCommandFailed => e
-            Chef::Log.info("#{@new_resource} Rescuing failed swapfile creation for #{@new_resource.path}")
-            Chef::Log.debug("#{@new_resource} Exception when creating swapfile #{@new_resource.path}: #{e}")
-            do_create(fallback_command)
+          if swap_enabled?
+            Chef::Log.debug("#{@new_resource} already created - nothing to do")
+          elsif
+            begin
+              do_create(command)
+            rescue Mixlib::ShellOut::ShellCommandFailed => e
+              Chef::Log.info("#{@new_resource} Rescuing failed swapfile creation for #{@new_resource.path}")
+              Chef::Log.debug("#{@new_resource} Exception when creating swapfile #{@new_resource.path}: #{e}")
+              do_create(fallback_command)
+            end
           end
         end
       end
 
       def action_remove
         swapoff if swap_enabled?
-        remove_swapfile if ::File.exist?(@new_resource.path)
+        remove_swapfile if ::File.exist?(@new_resource.path) || aix_dev_exist?
       end
 
       protected
 
       def do_create(command)
         create_swapfile(command)
-        set_permissions
-        mkswap
+        unless aix?
+          set_permissions
+          mkswap
+        end
         swapon
         persist if persist?
       end
 
       def create_swapfile(command)
-        shell_out!(command)
-        Chef::Log.info("#{@new_resource} Creating empty file at #{@new_resource.path}")
-        Chef::Log.debug("#{@new_resource} Empty file at #{@new_resource.path} created using command '#{command}'")
+        if aix?
+          Chef::Log.info("Creating swap with: #{command}")
+          newswap = shell_out!(command).stdout
+          Chef::Log.info("#{@new_resource} Paging space created: #{newswap}")
+        else
+          shell_out!(command)
+          Chef::Log.info("#{@new_resource} Creating empty file at #{@new_resource.path}")
+          Chef::Log.debug("#{@new_resource} Empty file at #{@new_resource.path} created using command '#{command}'")
+        end
       end
 
       def set_permissions
@@ -82,22 +95,36 @@ class Chef
       end
 
       def swapon
-        shell_out!("swapon #{@new_resource.path}")
+        if aix?
+          shell_out!("swapon /dev/#{@new_resource.path}")
+        else
+          shell_out!("swapon #{@new_resource.path}")
+        end
         Chef::Log.info("#{@new_resource} Swap enabled for #{@new_resource.path}")
       end
 
       def swapoff
-        shell_out!("swapoff #{@new_resource.path}")
+        if aix?
+          shell_out!("swapoff /dev/#{@new_resource.path}")
+        else
+          shell_out!("swapoff #{@new_resource.path}")
+        end 
         Chef::Log.info("#{@new_resource} Swap disabled for #{@new_resource.path}")
       end
 
       def remove_swapfile
-        ::FileUtils.rm(@new_resource.path)
-        Chef::Log.info("#{@new_resource} Removing swap file at #{@new_resource.path}")
+        if aix?
+          shell_out!("rmps #{@new_resource.path}")
+          Chef::Log.info("#{@new_resource} Removing swap #{@new_resource.path}")
+        else
+          ::FileUtils.rm(@new_resource.path)
+          Chef::Log.info("#{@new_resource} Removing swap file at #{@new_resource.path}")
+        end
       end
 
       def swap_enabled?
-        enabled_swapfiles = shell_out('swapon --summary').stdout
+        aix_command = "lsps -a |awk '$6 == \"yes\" {printf \"%s \",$1}'"
+        enabled_swapfiles = (aix? ? shell_out(aix_command).stdout : shell_out('swapon --summary').stdout)
         # Regex for our resource path and only our resource path
         # It will terminate on whitespace after the path it match
         # /testswapfile would match
@@ -106,9 +133,16 @@ class Chef
         !swapfile_regex.match(enabled_swapfiles).nil?
       end
 
+      def aix_dev_exist?
+        swaps = shell_out("lsps -a |awk '$2 != \"Space\" {printf \"%s \",$1}'").stdout
+        swaps.include? @new_resource.path       
+      end
+
       def swap_creation_command
         if compatible_filesystem? && compatible_kernel
           command = fallocate_command
+        elsif aix?
+          command = aix_command
         else
           command = dd_command
         end
@@ -146,6 +180,27 @@ class Chef
         command
       end
 
+      def aix_command
+        ppnum = aix_ppnum
+        command = "mkps -s#{ppnum} #{@new_resource.from_vg}"
+        Chef::Log.debug("#{@new_resource} aix command is '#{command}'")
+        command
+      end
+   
+      def aix_ppnum
+        if @new_resource.from_vg.nil?
+          raise "#{@new_resource}: from_vg property required for AIX node"
+        end
+        ppsize = shell_out("lqueryvg -g $(getlvodm -v #{new_resource.from_vg}) -at | awk '$1 == \"LTG\" {print $3}'").stdout.to_i
+        ppavail = shell_out("lqueryvg -g $(getlvodm -v #{new_resource.from_vg}) -at | awk '$1\" \"$2 == \"Free PPs:\" {print $3}'").stdout.to_i
+        ppnum = ( (@new_resource.size % ppsize == 0) ? @new_resource.size / ppsize : (@new_resource.size / ppsize) + 1)
+        if ppavail > ppnum
+          ppnum
+        else
+          raise "#{@new_resource}: Not enough free PPs in volume group #{@new_resource.from_vg}"
+        end
+      end
+
       def compatible_kernel
         fallocate_location = shell_out('which fallocate').stdout
         Chef::Log.debug("#{@new_resource} fallocate location is '#{fallocate_location}'")
@@ -166,20 +221,33 @@ class Chef
         !!@new_resource.persist
       end
 
+      def aix?
+        command = 'uname'
+        result = shell_out(command).stdout
+        Chef::Log.debug("#{@new_resource} server type is '#{result}'")
+        result.include? 'AIX'
+      end
+
       def persist
-        fstab = '/etc/fstab'
-        contents = ::File.readlines(fstab)
-        addition = "#{@new_resource.path} swap swap defaults 0 0"
-
-        if contents.any? { |line| line.strip == addition }
-          Chef::Log.debug("#{@new_resource} already added to /etc/fstab - skipping")
+        if aix?
+          shell_out!("chps -ay #{@new_resource.path}")
+          Chef::Log.info("#{new_resource} made persistant across reboots")
         else
-          Chef::Log.info("#{@new_resource} adding entry to #{fstab} for #{@new_resource.path}")
+          fstab = '/etc/fstab'
+          contents = ::File.readlines(fstab)
+          addition = "#{@new_resource.path} swap swap defaults 0 0"
 
-          contents << "#{addition}\n"
-          ::File.open(fstab, 'w') { |f| f.write(contents.join('')) }
+          if contents.any? { |line| line.strip == addition }
+            Chef::Log.debug("#{@new_resource} already added to /etc/fstab - skipping")
+          else
+            Chef::Log.info("#{@new_resource} adding entry to #{fstab} for #{@new_resource.path}")
+
+            contents << "#{addition}\n"
+            ::File.open(fstab, 'w') { |f| f.write(contents.join('')) }
+          end
         end
       end
+
     end
   end
 end
