@@ -25,3 +25,4 @@ default_action :create
 attribute :path,    kind_of: String, name_attribute: true
 attribute :size,    kind_of: Fixnum
 attribute :persist, kind_of: [TrueClass, FalseClass], default: false
+attribute :from_vg, kind_of: String
