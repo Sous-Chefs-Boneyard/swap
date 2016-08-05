@@ -21,7 +21,7 @@ suites:
   - name: create
     run_list:
       - recipe[fake::create]
-  - name: presist
+  - name: persist
     run_list:
       - recipe[fake::persist]
   - name: remove

@@ -9,9 +9,6 @@ transport:
 provisioner:
   name: dokken
 
-verifier:
-  name: inspec
-
 platforms:
 - name: debian-7
   driver:
@@ -99,7 +96,7 @@ suites:
   - name: create
     run_list:
       - recipe[fake::create]
-  - name: presist
+  - name: persist
     run_list:
       - recipe[fake::persist]
   - name: remove
