@@ -1,11 +1,9 @@
-sudo: required
-dist: trusty
-
-# install the pre-release chef-dk.  Use chef-stable-precise to install the stable release
+# Use Travis's cointainer based infrastructure
+sudo: false
 addons:
   apt:
     sources:
-      - chef-current-trusty
+      - chef-current-precise
     packages:
       - chefdk
 
@@ -14,47 +12,10 @@ install: echo "skip bundle install"
 
 branches:
   only:
-  - master
+    - master
 
-services: docker
-
-env:
-  matrix:
-  - INSTANCE=create-centos-6
-  - INSTANCE=create-centos-7
-  - INSTANCE=create-debian-7
-  - INSTANCE=create-debian-8
-  - INSTANCE=create-fedora-latest
-  - INSTANCE=create-opensuse-132
-  - INSTANCE=create-opensuse-421
-  - INSTANCE=create-ubuntu-1204
-  - INSTANCE=create-ubuntu-1404
-  - INSTANCE=create-ubuntu-1604
-  - INSTANCE=persist-centos-6
-  - INSTANCE=persist-centos-7
-  - INSTANCE=persist-debian-7
-  - INSTANCE=persist-debian-8
-  - INSTANCE=persist-fedora-latest
-  - INSTANCE=persist-opensuse-132
-  - INSTANCE=persist-opensuse-421
-  - INSTANCE=persist-ubuntu-1204
-  - INSTANCE=persist-ubuntu-1404
-  - INSTANCE=persist-ubuntu-1604
-  - INSTANCE=remove-centos-6
-  - INSTANCE=remove-centos-7
-  - INSTANCE=remove-debian-7
-  - INSTANCE=remove-debian-8
-  - INSTANCE=remove-fedora-latest
-  - INSTANCE=remove-opensuse-132
-  - INSTANCE=remove-opensuse-421
-  - INSTANCE=remove-ubuntu-1204
-  - INSTANCE=remove-ubuntu-1404
-  - INSTANCE=remove-ubuntu-1604
-
-  fast_finish: true
-
+# Ensure we make ChefDK's Ruby the default
 before_script:
-  - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
   - eval "$(/opt/chefdk/bin/chef shell-init bash)"
 
 script:
@@ -62,4 +23,3 @@ script:
   - /opt/chefdk/embedded/bin/cookstyle --version
   - /opt/chefdk/embedded/bin/foodcritic --version
   - /opt/chefdk/bin/chef exec rake
-  - KITCHEN_LOCAL_YAML=.kitchen.docker.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
