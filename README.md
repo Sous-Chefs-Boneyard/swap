@@ -1,6 +1,6 @@
 # Swap Cookbook
 
-[![Build Status](https://travis-ci.org/sethvargo-cookbooks/swap.png?branch=master)](https://travis-ci.org/sethvargo-cookbooks/swap) [![Code Climate](https://codeclimate.com/github/sethvargo-cookbooks/swap.png)](https://codeclimate.com/github/sethvargo-cookbooks/swap) [![Dependency Status](https://gemnasium.com/sethvargo-cookbooks/swap.png)](https://gemnasium.com/sethvargo-cookbooks/swap)
+[![Build Status](https://travis-ci.org/sethvargo-cookbooks/swap.svg?branch=master)](https://travis-ci.org/sethvargo-cookbooks/swap) [![Code Climate](https://codeclimate.com/github/sethvargo-cookbooks/swap.svg)](https://codeclimate.com/github/sethvargo-cookbooks/swap) [![Dependency Status](https://gemnasium.com/sethvargo-cookbooks/swap.svg)](https://gemnasium.com/sethvargo-cookbooks/swap)
 
 This cookbook provides an LWRP for easily creating and managing swap files.
 
