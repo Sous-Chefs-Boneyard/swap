@@ -107,11 +107,11 @@ class Chef
       end
 
       def swap_creation_command
-        if compatible_filesystem? && compatible_kernel
-          command = fallocate_command
-        else
-          command = dd_command
-        end
+        command = if compatible_filesystem? && compatible_kernel
+                    fallocate_command
+                  else
+                    dd_command
+                  end
         Chef::Log.debug("#{@new_resource} swap creation command is '#{command}'")
         command
       end
