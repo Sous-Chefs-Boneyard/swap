@@ -1,6 +1,65 @@
-rvm:
-  - 1.9.3
-  - 2.0.0
-  - 2.1
-bundler_args: --jobs 7 --without integration
-script: bundle exec rake
+sudo: required
+dist: trusty
+
+# install the pre-release chef-dk.  Use chef-stable-precise to install the stable release
+addons:
+  apt:
+    sources:
+      - chef-current-trusty
+    packages:
+      - chefdk
+
+# Don't `bundle install` which takes about 1.5 mins
+install: echo "skip bundle install"
+
+branches:
+  only:
+  - master
+
+services: docker
+
+env:
+  matrix:
+  - INSTANCE=create-centos-6
+  - INSTANCE=create-centos-7
+  - INSTANCE=create-debian-7
+  - INSTANCE=create-debian-8
+  - INSTANCE=create-fedora-latest
+  - INSTANCE=create-opensuse-132
+  - INSTANCE=create-opensuse-421
+  - INSTANCE=create-ubuntu-1204
+  - INSTANCE=create-ubuntu-1404
+  - INSTANCE=create-ubuntu-1604
+  - INSTANCE=presist-centos-6
+  - INSTANCE=presist-centos-7
+  - INSTANCE=presist-debian-7
+  - INSTANCE=presist-debian-8
+  - INSTANCE=presist-fedora-latest
+  - INSTANCE=presist-opensuse-132
+  - INSTANCE=presist-opensuse-421
+  - INSTANCE=presist-ubuntu-1204
+  - INSTANCE=presist-ubuntu-1404
+  - INSTANCE=presist-ubuntu-1604
+  - INSTANCE=remove-centos-6
+  - INSTANCE=remove-centos-7
+  - INSTANCE=remove-debian-7
+  - INSTANCE=remove-debian-8
+  - INSTANCE=remove-fedora-latest
+  - INSTANCE=remove-opensuse-132
+  - INSTANCE=remove-opensuse-421
+  - INSTANCE=remove-ubuntu-1204
+  - INSTANCE=remove-ubuntu-1404
+  - INSTANCE=remove-ubuntu-1604
+
+  fast_finish: true
+
+before_script:
+  - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
+  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+
+script:
+  - /opt/chefdk/embedded/bin/chef --version
+  - /opt/chefdk/embedded/bin/cookstyle --version
+  - /opt/chefdk/embedded/bin/foodcritic --version
+  - /opt/chefdk/bin/chef exec rake
+  - KITCHEN_LOCAL_YAML=.kitchen.docker.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
