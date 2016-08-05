@@ -1,10 +1,13 @@
 source 'https://rubygems.org'
 
-gem 'rubocop', '= 0.26.1'
+gem 'berkshelf', '>= 4.3'
+gem 'chefspec', '~> 4.6'
+gem 'cookstyle'
+gem 'foodcritic', '~> 7.0'
+gem 'kitchen-dokken'
+gem 'kitchen-inspec', '>= 0.14'
+gem 'kitchen-vagrant', '>= 0.20'
 gem 'rake'
-
-group :integration do
-  gem 'berkshelf',  '~> 3.1'
-  gem 'test-kitchen',    '~> 1.2'
-  gem 'kitchen-vagrant', '~> 0.15'
-end
+gem 'stove'
+gem 'test-kitchen', '>= 1.10'
+gem 'tomlrb'

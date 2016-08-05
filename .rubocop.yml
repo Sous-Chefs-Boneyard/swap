@@ -1,16 +1,5 @@
-AllCops:
-  Excludes:
-    - vendor/**
+# rubocop todo
 
-ClassLength:
-  Enabled: false
-Documentation:
-  Enabled: false
-DoubleNegation:
-  Enabled: false
-Encoding:
-  Enabled: false
-LineLength:
-  Max: 120
-MethodLength:
-  Max: 20
+Style/DoubleNegation:
+  Exclude:
+    - 'libraries/swapfile_provider.rb'
