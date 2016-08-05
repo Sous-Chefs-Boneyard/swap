@@ -1,16 +1,29 @@
-Swap LWRP
-=========
-[![Build Status](https://travis-ci.org/sethvargo-cookbooks/swap.png?branch=master)](https://travis-ci.org/sethvargo-cookbooks/swap)
-[![Code Climate](https://codeclimate.com/github/sethvargo-cookbooks/swap.png)](https://codeclimate.com/github/sethvargo-cookbooks/swap)
-[![Dependency Status](https://gemnasium.com/sethvargo-cookbooks/swap.png)](https://gemnasium.com/sethvargo-cookbooks/swap)
+# Swap Cookbook
+
+[![Build Status](https://travis-ci.org/sethvargo-cookbooks/swap.png?branch=master)](https://travis-ci.org/sethvargo-cookbooks/swap) [![Code Climate](https://codeclimate.com/github/sethvargo-cookbooks/swap.png)](https://codeclimate.com/github/sethvargo-cookbooks/swap) [![Dependency Status](https://gemnasium.com/sethvargo-cookbooks/swap.png)](https://gemnasium.com/sethvargo-cookbooks/swap)
 
 This cookbook provides an LWRP for easily creating and managing swap files.
 
-**This cookbook requires Ruby 1.9 or higher!**
+## Requirements
 
-Usage
------
+### Platforms
+
+- Debian / Ubuntu derivatives
+- RHEL and derivatives
+- Fedora
+- openSUSE / SUSE Linux Enterprises
+
+### Chef
+
+- Chef 11+
+
+### Cookbooks
+
+- none
+## Usage
+
 Add a new swap:
+
 ```ruby
 swap_file '/mnt/swap' do
   size      1024    # MBs
@@ -18,6 +31,7 @@ end
 ```
 
 Or remove an existing one:
+
 ```ruby
 swap_file '/mnt/swap' do
   action    :remove
@@ -25,36 +39,15 @@ end
 ```
 
 ### LWRP Attributes
-<table>
-  <tr>
-    <th>Attribute</th>
-    <th>Description</th>
-    <th>Example</th>
-    <th>Default</th>
-  </tr>
-  <tr>
-    <td>path</td>
-    <td>The path to put the swap file on the system</td>
-    <td>/mnt/swap</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>size</td>
-    <td>The size (in MBs) for the swap file</td>
-    <td>2048</td>
-    <td></td>
-  </tr>
-  <tr>
-    <td>persist</td>
-    <td>Persist the swapon</td>
-    <td>true</td>
-    <td>false</td>
-  </tr>
-</table>
 
+Attribute | Description                                 | Example   | Default
+--------- | ------------------------------------------- | --------- | -------
+path      | The path to put the swap file on the system | /mnt/swap |
+size      | The size (in MBs) for the swap file         | 2048      |
+persist   | Persist the swapon                          | true      | false
 
-Installation
-------------
+## Installation
+
 If you're using [berkshelf](https://github.com/RiotGames/berkshelf), add `swap` to your `Berksfile`:
 
 ```ruby
@@ -63,7 +56,9 @@ cookbook 'swap'
 
 Otherwise, install the cookbook from the community site:
 
-    knife cookbook site install swap
+```
+knife cookbook site install swap
+```
 
 Have any other cookbooks depend on this cookbook by adding it to the `metadata.rb`:
 
@@ -73,8 +68,7 @@ depends 'swap'
 
 Now you can use the LWRP in your cookbook!
 
-ChefSpec matchers
------------------
+## ChefSpec matchers
 
 ### create_swap_file(path)
 
@@ -94,22 +88,21 @@ Assert that the Chef run removes swap_file.
 expect(chef_run).to remove_swap_file(path)
 ```
 
+## Contributing
 
-Contributing
-------------
 1. Fork the project
 2. Create a feature branch corresponding to you change
 3. Commit and test thoroughly
 4. Create a Pull Request on github
-    - ensure you add a detailed description of your changes
 
+  - ensure you add a detailed description of your changes
 
-License and Authors
--------------------
+## License & Authors
+
 - Author:: Seth Vargo (sethvargo@gmail.com)
 
 ```text
-Copyright 2012-2013, Seth Vargo
+Copyright 2012-2016, Seth Vargo
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
