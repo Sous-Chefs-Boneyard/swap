@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-resource_name :swap_file
+
 # List of all actions supported by the provider
 actions :create, :remove
 
