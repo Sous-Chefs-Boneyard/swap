@@ -15,7 +15,7 @@ This cookbook provides an LWRP for easily creating and managing swap files.
 
 ### Chef
 
-- Chef 12.1+
+- Chef 12.5+
 
 ### Cookbooks
 

@@ -2,4 +2,4 @@
 
 Style/DoubleNegation:
   Exclude:
-    - 'libraries/swapfile_provider.rb'
+    - 'resources/file.rb'
