@@ -2,6 +2,11 @@
 
 This file is used to list changes made in each version of the swap cookbook.
 
+## v1.0.0 (2017-02-22)
+
+- This cookbook has been transferred to the Sous Chefs. See sous-chefs.org
+- Require Chef 12.1 or later
+
 ## v0.4.0
 
 - Use provides if available to avoid deprecation warnings on Chef 12.4+
