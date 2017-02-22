@@ -25,3 +25,4 @@ default_action :create
 attribute :path,    kind_of: String, name_attribute: true
 attribute :size,    kind_of: Integer
 attribute :persist, kind_of: [TrueClass, FalseClass], default: false
+attribute :timeout, kind_of: Integer, default: 600

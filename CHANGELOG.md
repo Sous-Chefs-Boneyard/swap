@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the swap cookbook.
 
+## v1.0.1 (tbr)
+
+- now supports a timeout property for create
+
 ## v1.0.0 (2017-02-22)
 
 - This cookbook has been transferred to the Sous Chefs. See sous-chefs.org

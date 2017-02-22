@@ -45,6 +45,7 @@ Attribute | Description                                 | Example   | Default
 path      | The path to put the swap file on the system | /mnt/swap |
 size      | The size (in MBs) for the swap file         | 2048      |
 persist   | Persist the swapon                          | true      | false
+timeout   | Timeout for dd/fallocate                    | 600       | 600
 
 ## Installation
 
