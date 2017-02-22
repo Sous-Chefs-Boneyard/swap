@@ -11,6 +11,6 @@ version '0.4.0'
   supports os
 end
 
-source_url 'https://github.com/sethvargo-cookbooks/swap' if respond_to?(:source_url)
-issues_url 'https://github.com/sethvargo-cookbooks/swap/issues' if respond_to?(:issues_url)
-chef_version '>= 11' if respond_to?(:chef_version)
+source_url 'https://github.com/sous-chefs/swap'
+issues_url 'https://github.com/sous-chefs/swap/issues'
+chef_version '>= 12.1' if respond_to?(:chef_version)
