@@ -1,4 +1,3 @@
-name 'fake'
+name 'test'
 version '0.0.1'
-
 depends 'swap'
