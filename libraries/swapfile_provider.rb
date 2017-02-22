@@ -13,7 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
+require 'chef/provider'
+require 'chef/provider/lwrp_base'
 require 'fileutils'
 require 'chef/mixin/shell_out'
 
@@ -25,8 +26,10 @@ class Chef
       # Fix Chef 12.4.0 support (issue #22)
       provides :swap_file if Chef::Provider.respond_to?(:provides)
 
+      use_inline_resources
+
       def load_current_resource
-        @current_resource ||= Chef::Resource.SwapFile.new(new_resource.name)
+        @current_resource ||= Chef::Resource::SwapFile.new(new_resource.name)
         @current_resource.path(new_resource.path)
         @current_resource.size(new_resource.size)
         @current_resource.persist(!!new_resource.persist)
