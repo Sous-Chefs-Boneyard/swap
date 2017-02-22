@@ -26,7 +26,7 @@ class Chef
       provides :swap_file if Chef::Provider.respond_to?(:provides)
 
       def load_current_resource
-        @current_resource ||= Chef::Resource::SwapFile.new(new_resource.name)
+        @current_resource ||= Chef::Resource.SwapFile.new(new_resource.name)
         @current_resource.path(new_resource.path)
         @current_resource.size(new_resource.size)
         @current_resource.persist(!!new_resource.persist)
