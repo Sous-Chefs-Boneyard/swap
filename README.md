@@ -1,6 +1,6 @@
 # Swap Cookbook
 
-[![Build Status](https://travis-ci.org/sethvargo-cookbooks/swap.svg?branch=master)](https://travis-ci.org/sethvargo-cookbooks/swap) [![Code Climate](https://codeclimate.com/github/sethvargo-cookbooks/swap.svg)](https://codeclimate.com/github/sethvargo-cookbooks/swap) [![Dependency Status](https://gemnasium.com/sethvargo-cookbooks/swap.svg)](https://gemnasium.com/sethvargo-cookbooks/swap)
+[![Build Status](https://travis-ci.org/sous-chefs/swap.svg?branch=master)](https://travis-ci.org/sous-chefs/swap)  
 
 This cookbook provides an LWRP for easily creating and managing swap files.
 
@@ -15,7 +15,7 @@ This cookbook provides an LWRP for easily creating and managing swap files.
 
 ### Chef
 
-- Chef 11+
+- Chef 12.1+
 
 ### Cookbooks
 
