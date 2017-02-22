@@ -25,7 +25,7 @@ class Chef
 
       # Fix Chef 12.4.0 support (issue #22)
       provides :swap_file if Chef::Provider.respond_to?(:provides)
-      
+
       use_inline_resources
 
       def load_current_resource
