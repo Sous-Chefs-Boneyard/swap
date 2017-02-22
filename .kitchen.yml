@@ -3,6 +3,8 @@ driver:
 
 provisioner:
   name: chef_zero
+  log_level: info
+  log_file: /var/log/chef-solo.log
 
 platforms:
   - name: centos-6.8

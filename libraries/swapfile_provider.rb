@@ -13,13 +13,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
+require 'chef/provider'
+require 'chef/provider/lwrp_base'
 require 'fileutils'
 require 'chef/mixin/shell_out'
 
 class Chef
   class Provider
-    class SwapFile < Chef::Provider
+    class SwapFile < Chef::Provider::LWRPBase
       include Chef::Mixin::ShellOut
 
       # Fix Chef 12.4.0 support (issue #22)
