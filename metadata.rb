@@ -1,6 +1,6 @@
 name 'swap'
-maintainer 'Seth Vargo'
-maintainer_email 'sethvargo@gmail.com'
+maintainer 'Sous Chefs'
+maintainer_email 'help@sous-chefs.org'
 license 'Apache 2.0'
 description 'Manage swap and swapfiles with Chef'
 long_description 'Provides an LWRP for easily creating a managing swap files ' \
