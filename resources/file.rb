@@ -23,5 +23,5 @@ default_action :create
 
 # Require attributes
 attribute :path,    kind_of: String, name_attribute: true
-attribute :size,    kind_of: Fixnum
+attribute :size,    kind_of: Integer
 attribute :persist, kind_of: [TrueClass, FalseClass], default: false
