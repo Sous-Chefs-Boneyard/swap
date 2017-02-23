@@ -2,9 +2,10 @@
 
 This file is used to list changes made in each version of the swap cookbook.
 
-## v1.0.1 (tbr)
+## v2.0.0 (2017-02-23)
 
-- now supports a timeout property for create
+- Now supports a timeout property for create
+- Converted to a custom resource to resolve the failures in the 1.0 release and wired up proper converge messaging. This requires Chef 12.5 or later
 
 ## v1.0.0 (2017-02-22)
 
