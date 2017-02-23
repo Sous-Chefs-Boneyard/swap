@@ -41,7 +41,7 @@ action :remove do
   remove_swapfile if ::File.exist?(new_resource.path)
 end
 
-action_class.class_eval do
+action_class do
   def do_create(command)
     create_swapfile(command)
     set_permissions
@@ -51,25 +51,28 @@ action_class.class_eval do
   end
 
   def create_swapfile(command)
-    shell_out!(command, timeout: new_resource.timeout)
-    Chef::Log.info("#{new_resource} Creating empty file at #{new_resource.path}")
-    Chef::Log.debug("#{new_resource} Empty file at #{new_resource.path} created using command '#{command}'")
+    converge_by "create empty swapfile at #{new_resource.path}" do # ~FC054
+      shell_out!(command, timeout: new_resource.timeout)
+    end
   end
 
   def set_permissions
     permissions = '600'
-    shell_out!("chmod #{permissions} #{new_resource.path}")
-    Chef::Log.info("#{new_resource} Set permissions on #{new_resource.path} to #{permissions}")
+    converge_by "set permissions on #{new_resource.path} to #{permissions}" do
+      shell_out!("chmod #{permissions} #{new_resource.path}")
+    end
   end
 
   def mkswap
-    shell_out!("mkswap -f #{new_resource.path}")
-    Chef::Log.info("#{new_resource} #{new_resource.path} made swappable")
+    converge_by "make #{new_resource.path} swappable" do
+      shell_out!("mkswap -f #{new_resource.path}")
+    end
   end
 
   def swapon
-    shell_out!("swapon #{new_resource.path}")
-    Chef::Log.info("#{new_resource} Swap enabled for #{new_resource.path}")
+    converge_by "enable swap for #{new_resource.path}" do
+      shell_out!("swapon #{new_resource.path}")
+    end
   end
 
   def swapoff
