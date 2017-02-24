@@ -6,6 +6,6 @@
   ls -l --block-size=M /mnt | grep "swap" | grep "1M"
 }
 
-@test "swappiness is untouched" {
-  grep 60 /proc/sys/vm/swappiness
+@test "swappiness is set to 10" {
+  grep 10 /proc/sys/vm/swappiness
 }

@@ -42,6 +42,9 @@ suites:
   - name: create
     run_list:
       - recipe[test::create]
+  - name: create_swappiness
+    run_list:
+      - recipe[test::create_swappiness]
   - name: persist
     run_list:
       - recipe[test::persist]
