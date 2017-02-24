@@ -9,8 +9,11 @@ addons:
       - chefdk
 
 before_install:
+  - apt-get install -y --no-install-recommends apt-transport-https ca-certificates curl software-properties-common
+  - curl -fsSL https://apt.dockerproject.org/gpg | sudo apt-key add -
+  - sudo add-apt-repository "deb https://apt.dockerproject.org/repo/ ubuntu-trusty main"
   - sudo apt-get update
-  - sudo apt-get -y install docker
+  - sudo apt-get -y install docker-engine
   - sudo swapon -s
 # Don't `bundle install` which takes about 1.5 mins
 install: echo "skip bundle install"
