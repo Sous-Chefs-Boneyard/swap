@@ -19,6 +19,7 @@ property :path,    String, name_attribute: true
 property :size,    Integer
 property :persist, [TrueClass, FalseClass], default: false
 property :timeout, Integer, default: 600
+property :swappiness, Integer, default: nil
 
 action :create do
   command = swap_creation_command
@@ -32,6 +33,13 @@ action :create do
       Chef::Log.info("#{new_resource} Rescuing failed swapfile creation for #{new_resource.path}")
       Chef::Log.debug("#{new_resource} Exception when creating swapfile #{new_resource.path}: #{e}")
       do_create(fallback_command)
+    end
+  end
+  if new_resource.swappiness
+    include_recipe 'sysctl::default'
+
+    sysctl_param 'vm.swappiness' do
+      value new_resource.swappiness
     end
   end
 end
