@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the swap cookbook.
 
+## v2.1.0 (tbd)
+
+- Added sysctl and swappiness to create call
+
 ## v2.0.0 (2017-02-23)
 
 - Now supports a timeout property for create
