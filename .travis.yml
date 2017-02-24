@@ -10,7 +10,7 @@ addons:
 
 before_install:
   - sudo apt-get update
-  - sudo apt-get -y install lxc-docker
+  - sudo apt-get -y install docker
 # Don't `bundle install` which takes about 1.5 mins
 install: echo "skip bundle install"
 
