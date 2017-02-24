@@ -22,7 +22,6 @@ env:
   - INSTANCE=create-centos-6
   - INSTANCE=create-centos-7
   - INSTANCE=create-debian-8
-  - INSTANCE=create-ubuntu-1204
   - INSTANCE=create-ubuntu-1404
   - INSTANCE=create-ubuntu-1604
   - INSTANCE=create-fedora-25
@@ -30,7 +29,6 @@ env:
   - INSTANCE=create-swappiness-centos-6
   - INSTANCE=create-swappiness-centos-7
   - INSTANCE=create-swappiness-debian-8
-  - INSTANCE=create-swappiness-ubuntu-1204
   - INSTANCE=create-swappiness-ubuntu-1404
   - INSTANCE=create-swappiness-ubuntu-1604
   - INSTANCE=create-swappiness-fedora-25
