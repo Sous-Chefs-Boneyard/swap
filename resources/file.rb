@@ -28,6 +28,7 @@ action :create do
     Chef::Log.debug("#{new_resource} already created - nothing to do")
   else
     begin
+      Chef::Log.info "starting first create: #{node['virtualization']['system'}"
       do_create(command)
     rescue Mixlib::ShellOut::ShellCommandFailed => e
       Chef::Log.info("#{new_resource} Rescuing failed swapfile creation for #{new_resource.path}")
