@@ -19,7 +19,7 @@ property :path,    String, name_attribute: true
 property :size,    Integer
 property :persist, [TrueClass, FalseClass], default: false
 property :timeout, Integer, default: 600
-property :swappiness, [Integer, nil], default: nil
+property :swappiness, Integer
 
 action :create do
   if swap_enabled?
