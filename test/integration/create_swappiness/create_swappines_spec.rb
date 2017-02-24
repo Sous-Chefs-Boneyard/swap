@@ -7,5 +7,5 @@ describe bash('ls -l --block-size=M /mnt') do
 end
 
 describe bash('grep 10 /proc/sys/vm/swappiness') do
-  its('stdout') { should match /\/proc\/sys\/vm\/swappiness/ }
+  its('stdout') { should match %r{\/proc\/sys\/vm\/swappiness} }
 end
