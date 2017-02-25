@@ -23,7 +23,7 @@ branches:
   only:
     - master
 
-services: docker
+#services: docker
 
 env:
   matrix:
