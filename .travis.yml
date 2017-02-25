@@ -18,7 +18,7 @@ before_install:
   - sudo add-apt-repository "deb https://apt.dockerproject.org/repo/ ubuntu-trusty main"
   - sudo apt-get update
   - sudo apt-get -y install docker-engine
-  - cat /etc/default/docker
+  - sudo cat /etc/default/docker
   - sudo service docker restart
   - sudo swapon -s
 # Don't `bundle install` which takes about 1.5 mins
