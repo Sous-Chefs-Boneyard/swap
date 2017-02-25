@@ -9,11 +9,15 @@ addons:
       - chefdk
 
 before_install:
+  - dd if=/dev/zero of=/swapfile bs=1024 count=1
+  - mkswap /swapfile
+  - swapon /swapfile
   - sudo apt-get install -y --no-install-recommends apt-transport-https ca-certificates curl software-properties-common
   - curl -fsSL https://apt.dockerproject.org/gpg | sudo apt-key add -
   - sudo add-apt-repository "deb https://apt.dockerproject.org/repo/ ubuntu-trusty main"
   - sudo apt-get update
   - sudo apt-get -y install docker-engine
+  - cat /etc/default/docker
   - sudo service docker restart
   - sudo swapon -s
 # Don't `bundle install` which takes about 1.5 mins
