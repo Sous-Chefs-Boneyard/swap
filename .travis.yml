@@ -9,7 +9,8 @@ addons:
       - chefdk
 
 before_install:
-  - sudo dd if=/dev/zero of=/swapfile bs=1024 count=1
+  - sudo dd if=/dev/zero of=/swapfile bs=1024 count=65535
+  - sudo mkdir -p /mnt
   - sudo mkswap /swapfile
   - sudo swapon /swapfile
   - sudo apt-get install -y --no-install-recommends apt-transport-https ca-certificates curl software-properties-common
