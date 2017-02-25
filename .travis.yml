@@ -9,9 +9,9 @@ addons:
       - chefdk
 
 before_install:
-  - dd if=/dev/zero of=/swapfile bs=1024 count=1
-  - mkswap /swapfile
-  - swapon /swapfile
+  - sudo dd if=/dev/zero of=/swapfile bs=1024 count=1
+  - sudo mkswap /swapfile
+  - sudo swapon /swapfile
   - sudo apt-get install -y --no-install-recommends apt-transport-https ca-certificates curl software-properties-common
   - curl -fsSL https://apt.dockerproject.org/gpg | sudo apt-key add -
   - sudo add-apt-repository "deb https://apt.dockerproject.org/repo/ ubuntu-trusty main"
@@ -51,7 +51,7 @@ before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
   - eval "$(/opt/chefdk/bin/chef shell-init bash)"
 
-script: KITCHEN_LOCAL_YAML=.kitchen.dokken.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
+script: sudo KITCHEN_LOCAL_YAML=.kitchen.dokken.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
 
 matrix:
   include:
