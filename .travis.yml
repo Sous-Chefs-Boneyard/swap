@@ -21,6 +21,7 @@ before_install:
   - sudo cat /etc/default/docker
   - sudo service docker restart
   - sudo swapon -s
+  - sudo chef gem install kitchen-dokken
 # Don't `bundle install` which takes about 1.5 mins
 install: echo "skip bundle install"
 
