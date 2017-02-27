@@ -22,19 +22,19 @@ services: docker
 env:
   matrix:
   - INSTANCE=create-centos-6
-  #- INSTANCE=create-centos-7
-  #- INSTANCE=create-debian-8
-  #- INSTANCE=create-ubuntu-1404
-  #- INSTANCE=create-ubuntu-1604
-  #- INSTANCE=create-fedora-25
-  #- INSTANCE=create-opensuse-leap
-  #- INSTANCE=create-swappiness-centos-6
-  #- INSTANCE=create-swappiness-centos-7
-  #- INSTANCE=create-swappiness-debian-8
-  #- INSTANCE=create-swappiness-ubuntu-1404
-  #- INSTANCE=create-swappiness-ubuntu-1604
-  #- INSTANCE=create-swappiness-fedora-25
-  #- INSTANCE=create-swappiness-opensuse-leap
+  - INSTANCE=create-centos-7
+  - INSTANCE=create-debian-8
+  - INSTANCE=create-ubuntu-1404
+  - INSTANCE=create-ubuntu-1604
+  - INSTANCE=create-fedora-25
+  - INSTANCE=create-opensuse-leap
+  - INSTANCE=create-swappiness-centos-6
+  - INSTANCE=create-swappiness-centos-7
+  - INSTANCE=create-swappiness-debian-8
+  - INSTANCE=create-swappiness-ubuntu-1404
+  - INSTANCE=create-swappiness-ubuntu-1604
+  - INSTANCE=create-swappiness-fedora-25
+  - INSTANCE=create-swappiness-opensuse-leap
 
 # Ensure we make ChefDK's Ruby the default
 before_script:
