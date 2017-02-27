@@ -39,7 +39,6 @@ env:
   - INSTANCE=persist-debian-8
   - INSTANCE=persist-ubuntu-1404
   - INSTANCE=persist-ubuntu-1604
-  - INSTANCE=persist-fedora-25
   - INSTANCE=persist-opensuse-leap
   - INSTANCE=remove-centos-6
   - INSTANCE=remove-centos-7
