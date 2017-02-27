@@ -22,17 +22,16 @@ property :timeout, Integer, default: 600
 property :swappiness, Integer
 
 action :create do
-  command = swap_creation_command
-  fallback_command = fallback_swap_creation_command
   if swap_enabled?
     Chef::Log.debug("#{new_resource} already created - nothing to do")
   else
     begin
-      do_create(command)
+      Chef::Log.info "starting first create: #{node['virtualization']['system']}"
+      do_create(swap_creation_command)
     rescue Mixlib::ShellOut::ShellCommandFailed => e
-      Chef::Log.info("#{new_resource} Rescuing failed swapfile creation for #{new_resource.path}")
+      Chef::Log.warn("#{new_resource} Rescuing failed swapfile creation for #{new_resource.path}")
       Chef::Log.debug("#{new_resource} Exception when creating swapfile #{new_resource.path}: #{e}")
-      do_create(fallback_command)
+      do_create(dd_command)
     end
   end
   if new_resource.swappiness
@@ -106,7 +105,7 @@ action_class do
   end
 
   def swap_creation_command
-    command = if compatible_filesystem? && compatible_kernel
+    command = if compatible_filesystem? && compatible_kernel && !docker?
                 fallocate_command
               else
                 dd_command
