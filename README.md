@@ -1,8 +1,9 @@
 # Swap Cookbook
 
-[![Build Status](https://travis-ci.org/sous-chefs/swap.svg?branch=master)](https://travis-ci.org/sous-chefs/swap)  
+[![Build Status](https://travis-ci.org/sous-chefs/swap.svg?branch=master)](https://travis-ci.org/sous-chefs/swap)
+[![Cookbook Version](https://img.shields.io/cookbook/v/swap.svg)](https://supermarket.chef.io/cookbooks/swap)
 
-This cookbook provides an LWRP for easily creating and managing swap files.
+This cookbook provides resource for easily creating and managing swap files.
 
 ## Requirements
 
