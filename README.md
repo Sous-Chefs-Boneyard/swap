@@ -16,7 +16,7 @@ This cookbook provides resource for easily creating and managing swap files.
 
 ### Chef
 
-- Chef 12.5+
+- Chef 12.7+
 
 ### Cookbooks
 
