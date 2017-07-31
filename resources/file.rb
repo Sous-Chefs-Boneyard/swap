@@ -163,7 +163,7 @@ action_class do
   # we can remove this when we only support Chef 13
   def docker?(node = run_context.nil? ? nil : run_context.node)
     !!(node && node[:virtualization] && node[:virtualization][:systems] &&
-       node[:virtualization][:systems][:docker] && node[:virtualization][:systems][:docker] == "guest")
+       node[:virtualization][:systems][:docker] && node[:virtualization][:systems][:docker] == 'guest')
   end
 
   def persist?
