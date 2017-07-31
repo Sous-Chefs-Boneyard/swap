@@ -4,12 +4,10 @@ dist: trusty
 addons:
   apt:
     sources:
-      - chef-stable-precise
+      - chef-current-trusty
     packages:
       - chefdk
 
-before_install:
-  - sudo chef gem install kitchen-dokken
 # Don't `bundle install` which takes about 1.5 mins
 install: echo "skip bundle install"
 
@@ -26,14 +24,14 @@ env:
   - INSTANCE=create-debian-8
   - INSTANCE=create-ubuntu-1404
   - INSTANCE=create-ubuntu-1604
-  - INSTANCE=create-fedora-25
+  - INSTANCE=create-fedora-latest
   - INSTANCE=create-opensuse-leap
   - INSTANCE=create-swappiness-centos-6
   - INSTANCE=create-swappiness-centos-7
   - INSTANCE=create-swappiness-debian-8
   - INSTANCE=create-swappiness-ubuntu-1404
   - INSTANCE=create-swappiness-ubuntu-1604
-  - INSTANCE=create-swappiness-fedora-25
+  - INSTANCE=create-swappiness-fedora-latest
   - INSTANCE=persist-centos-6
   - INSTANCE=persist-centos-7
   - INSTANCE=persist-debian-8
@@ -45,20 +43,20 @@ env:
   - INSTANCE=remove-debian-8
   - INSTANCE=remove-ubuntu-1404
   - INSTANCE=remove-ubuntu-1604
-  - INSTANCE=remove-fedora-25
+  - INSTANCE=remove-fedora-latest
   - INSTANCE=remove-opensuse-leap
-# Ensure we make ChefDK's Ruby the default
+
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
-  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+  - eval "$(chef shell-init bash)"
+  - chef --version
+  - cookstyle --version
+  - foodcritic --version
 
-script: sudo KITCHEN_LOCAL_YAML=.kitchen.dokken.yml /opt/chefdk/embedded/bin/kitchen verify ${INSTANCE}
+script: sudo KITCHEN_LOCAL_YAML=.kitchen.dokken.yml kitchen verify ${INSTANCE}
 
 matrix:
   include:
-    script:
-      - /opt/chefdk/embedded/bin/chef --version
-      - /opt/chefdk/embedded/bin/cookstyle --version
-      - /opt/chefdk/embedded/bin/foodcritic --version
-      - /opt/chefdk/bin/chef exec rake
-    env: UNIT_AND_LINT=1
+    - script:
+      - chef exec delivery local all
+      env: UNIT_AND_LINT=1
