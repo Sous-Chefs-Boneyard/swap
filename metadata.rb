@@ -5,7 +5,7 @@ license 'Apache-2.0'
 description 'Manage swap and swapfiles with Chef'
 long_description 'A resource for easily creating a managing swap files ' \
                  'and swap partitions in Chef recipes.'
-version '2.0.0'
+version '2.1.0'
 
 %w(ubuntu debian redhat centos suse opensuse opensuseleap scientific oracle amazon zlinux).each do |os|
   supports os
