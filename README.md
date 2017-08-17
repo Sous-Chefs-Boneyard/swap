@@ -21,6 +21,7 @@ This cookbook provides resource for easily creating and managing swap files.
 ### Cookbooks
 
 - none
+
 ## Usage
 
 Add a new swap:
