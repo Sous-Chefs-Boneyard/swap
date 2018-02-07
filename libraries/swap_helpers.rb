@@ -15,8 +15,9 @@ module SwapCookbook
     end
 
     def set_permissions
+      permissions = 60
       converge_by "set permissions on #{new_resource.path} to #{permissions}" do
-        shell_out!("chmod 600 #{new_resource.path}")
+        shell_out!("chmod #{permissions} #{new_resource.path}")
       end
     end
 
