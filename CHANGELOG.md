@@ -2,6 +2,8 @@
 
 This file is used to list changes made in each version of the swap cookbook.
 
+## v2.2.0 (UNRELEASED)
+
 ## v2.1.0 (2017-08-17)
 
 - Added sysctl and swappiness to create call. This adds a dependency on systctl

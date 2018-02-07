@@ -1,5 +1,0 @@
-# rubocop todo
-
-Style/DoubleNegation:
-  Exclude:
-    - 'resources/file.rb'

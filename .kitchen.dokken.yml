@@ -56,12 +56,16 @@ platforms:
     image: dokken/centos-7
     privileged: true
     pid_one_command: /usr/lib/systemd/systemd
+    internediate_instructions:
+      - RUN if [ ! -f /etc/fstab ];then touch /etc/fstab fi
 
 - name: fedora-latest
   driver:
     image: dokken/fedora-latest
     privileged: true
     pid_one_command: /usr/lib/systemd/systemd
+    internediate_instructions:
+      - RUN if [ ! -f /etc/fstab ];then touch /etc/fstab fi
 
 - name: ubuntu-14.04
   driver:
