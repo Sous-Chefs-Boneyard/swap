@@ -2,9 +2,16 @@
 
 This file is used to list changes made in each version of the swap cookbook.
 
-## v2.1.0 (tbd)
+## v2.1.0 (2017-08-17)
 
-- Added sysctl and swappiness to create call
+- Added sysctl and swappiness to create call. This adds a dependency on systctl
+- Require Chef 12.7 or later since 12.5/12.6 had issues with custom resources
+- Add integration testing in Travis with kitchen-dokken
+- Add testing with Delivery local mode
+- Update the dokken config to use the dokken images
+- Fix the license metadata to be a SPDX compliant license string
+- Convert the integration tests from bats to InSpec
+- Add a very basic ChefSpec test
 
 ## v2.0.0 (2017-02-23)
 
