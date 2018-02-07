@@ -5,7 +5,7 @@ module SwapCookbook
       set_permissions
       mkswap
       swapon
-      persist if persist?
+      persist_swap if persist?
     end
 
     def create_swapfile(command)
@@ -121,7 +121,7 @@ module SwapCookbook
       new_resource.persist
     end
 
-    def persist
+    def persist_swap
       fstab = '/etc/fstab'
       contents = ::File.readlines(fstab)
       addition = "#{new_resource.path} swap swap defaults 0 0"
