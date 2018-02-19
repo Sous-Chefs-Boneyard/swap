@@ -15,4 +15,4 @@ source_url 'https://github.com/sous-chefs/swap'
 issues_url 'https://github.com/sous-chefs/swap/issues'
 chef_version '>= 12.7' if respond_to?(:chef_version)
 
-depends 'sysctl'
+depends 'sysctl', '>= 1.0'
