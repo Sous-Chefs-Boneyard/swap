@@ -25,8 +25,6 @@ action :create do
   do_create(swap_creation_command) unless swap_enabled?
 
   if new_resource.swappiness
-    include_recipe 'sysctl::default'
-
     sysctl_param 'vm.swappiness' do
       value new_resource.swappiness
     end
