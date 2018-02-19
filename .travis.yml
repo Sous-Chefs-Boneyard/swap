@@ -4,71 +4,70 @@ dist: trusty
 addons:
   apt:
     sources:
-      - chef-current-trusty
+    - chef-current-trusty
     packages:
-      - chefdk
+    - chefdk
 
 # Don't `bundle install` which takes about 1.5 mins
 install: echo "skip bundle install"
 
 branches:
   only:
-    - master
+  - master
 
 services: docker
 
 env:
-  matrix:
-  - INSTANCE=create-amazonlinux
-  - INSTANCE=create-centos-6
-  - INSTANCE=create-centos-7
-  - INSTANCE=create-debian-8
-  - INSTANCE=create-debian-9
-  - INSTANCE=create-ubuntu-1404
-  - INSTANCE=create-ubuntu-1604
-  - INSTANCE=create-fedora-latest
-  - INSTANCE=create-opensuse-leap
-  - INSTANCE=create-ubuntu-1604 CHEF_VERSION=12.7.2
-  - INSTANCE=create-swappiness-amazonlinux
-  - INSTANCE=create-swappiness-centos-6
-  - INSTANCE=create-swappiness-centos-7
-  - INSTANCE=create-swappiness-debian-8
-  - INSTANCE=create-swappiness-debian-9
-  - INSTANCE=create-swappiness-ubuntu-1404
-  - INSTANCE=create-swappiness-ubuntu-1604
-  - INSTANCE=create-swappiness-fedora-latest
-  - INSTANCE=remove-ubuntu-1604 CHEF_VERSION=12.7.2
-  - INSTANCE=persist-amazonlinux
-  - INSTANCE=persist-centos-6
-  # - INSTANCE=persist-centos-7 /etc/fstab is missing and keeps getting removed from the box
-  - INSTANCE=persist-debian-8
-  - INSTANCE=persist-debian-9
-  - INSTANCE=persist-ubuntu-1404
-  - INSTANCE=persist-ubuntu-1604
-  - INSTANCE=persist-opensuse-leap
-  - INSTANCE=remove-ubuntu-1604 CHEF_VERSION=12.7.2
-  - INSTANCE=remove-amazonlinux
-  - INSTANCE=remove-centos-6
-  - INSTANCE=remove-centos-7
-  - INSTANCE=remove-debian-8
-  - INSTANCE=remove-debian-9
-  - INSTANCE=remove-ubuntu-1404
-  - INSTANCE=remove-ubuntu-1604
-  - INSTANCE=remove-fedora-latest
-  - INSTANCE=remove-opensuse-leap
-  - INSTANCE=remove-ubuntu-1604 CHEF_VERSION=12.7.2
+- INSTANCE=create-amazonlinux
+- INSTANCE=create-centos-6
+- INSTANCE=create-centos-7
+- INSTANCE=create-debian-8
+- INSTANCE=create-debian-9
+- INSTANCE=create-ubuntu-1404
+- INSTANCE=create-ubuntu-1604
+- INSTANCE=create-fedora-latest
+- INSTANCE=create-opensuse-leap
+- INSTANCE=create-ubuntu-1604 CHEF_VERSION=12.7.2
+- INSTANCE=create-swappiness-amazonlinux
+- INSTANCE=create-swappiness-centos-6
+- INSTANCE=create-swappiness-centos-7
+- INSTANCE=create-swappiness-debian-8
+- INSTANCE=create-swappiness-debian-9
+- INSTANCE=create-swappiness-ubuntu-1404
+- INSTANCE=create-swappiness-ubuntu-1604
+- INSTANCE=create-swappiness-fedora-latest
+- INSTANCE=remove-ubuntu-1604 CHEF_VERSION=12.7.2
+- INSTANCE=persist-amazonlinux
+- INSTANCE=persist-centos-6
+# - INSTANCE=persist-centos-7 /etc/fstab is missing and keeps getting removed from the box
+- INSTANCE=persist-debian-8
+- INSTANCE=persist-debian-9
+- INSTANCE=persist-ubuntu-1404
+- INSTANCE=persist-ubuntu-1604
+- INSTANCE=persist-opensuse-leap
+- INSTANCE=remove-ubuntu-1604 CHEF_VERSION=12.7.2
+- INSTANCE=remove-amazonlinux
+- INSTANCE=remove-centos-6
+- INSTANCE=remove-centos-7
+- INSTANCE=remove-debian-8
+- INSTANCE=remove-debian-9
+- INSTANCE=remove-ubuntu-1404
+- INSTANCE=remove-ubuntu-1604
+- INSTANCE=remove-fedora-latest
+- INSTANCE=remove-opensuse-leap
+- INSTANCE=remove-ubuntu-1604 CHEF_VERSION=12.7.2
 
 before_script:
-  - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
-  - eval "$(chef shell-init bash)"
-  - chef --version
-  - cookstyle --version
-  - foodcritic --version
+- sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
+- eval "$(chef shell-init bash)"
+- chef --version
+- cookstyle --version
+- foodcritic --version
 
 script: sudo KITCHEN_LOCAL_YAML=.kitchen.dokken.yml kitchen verify ${INSTANCE}
 
 matrix:
   include:
-    - script:
-      - chef exec delivery local all
-      env: UNIT_AND_LINT=1
+  - script:
+    - chef exec delivery local all
+    env: UNIT_AND_LINT=1
