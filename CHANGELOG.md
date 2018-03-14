@@ -2,7 +2,11 @@
 
 This file is used to list changes made in each version of the swap cookbook.
 
-## v2.2.0 (UNRELEASED)
+## v2.2.0 (2018-03-14)
+
+- General tidy up of resources
+- Migrate helpers into the helpers file
+- Cleanup test suites
 
 ## v2.1.0 (2017-08-17)
 

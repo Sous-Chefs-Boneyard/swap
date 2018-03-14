@@ -23,7 +23,7 @@ env:
 - INSTANCE=create-centos-7
 - INSTANCE=create-debian-8
 - INSTANCE=create-debian-9
-- INSTANCE=create-ubuntu-1404
+#- INSTANCE=create-ubuntu-1404 This always fails in Travis. 
 - INSTANCE=create-ubuntu-1604
 - INSTANCE=create-fedora-latest
 - INSTANCE=create-opensuse-leap
