@@ -15,7 +15,7 @@
 # limitations under the License.
 #
 
-property :path,    String, name_attribute: true
+property :path,    String, name_property: true
 property :size,    Integer
 property :persist, [true, false], default: false
 property :timeout, Integer, default: 600
