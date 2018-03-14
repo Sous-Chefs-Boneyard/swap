@@ -14,12 +14,11 @@ platforms:
       box: mvbcoding/awslinux
   - name: centos-6
   - name: centos-7
-  - name: debian-7
   - name: debian-8
   - name: debian-9
   - name: fedora-latest
     driver:
-      box: bento/fedora-26
+      box: bento/fedora-27
   - name: opensuse-leap
     driver:
       box: bento/opensuse-leap-42
