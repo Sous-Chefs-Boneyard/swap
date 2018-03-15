@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the swap cookbook.
 
+## v2.2.1 (2018-03-15)
+
+- Fix #60, incorrect permissions on `set_permissions`
+
 ## v2.2.0 (2018-03-14)
 
 - General tidy up of resources
