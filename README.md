@@ -1,7 +1,8 @@
+The swap resource from this cookbook is now shipping as part of Chef 14\. With the inclusion of this resource into Chef itself we are now deprecating this cookbook. It will continue to function for Chef 13 users, but will not be updated.
+
 # Swap Cookbook
 
-[![Build Status](https://travis-ci.org/sous-chefs/swap.svg?branch=master)](https://travis-ci.org/sous-chefs/swap)
-[![Cookbook Version](https://img.shields.io/cookbook/v/swap.svg)](https://supermarket.chef.io/cookbooks/swap)
+[![Build Status](https://travis-ci.org/sous-chefs/swap.svg?branch=master)](https://travis-ci.org/sous-chefs/swap) [![Cookbook Version](https://img.shields.io/cookbook/v/swap.svg)](https://supermarket.chef.io/cookbooks/swap)
 
 This cookbook provides resource for easily creating and managing swap files.
 

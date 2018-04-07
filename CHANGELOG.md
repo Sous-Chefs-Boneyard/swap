@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the swap cookbook.
 
+## v2.2.2 (2018-04-07)
+
+- The swap resource from this cookbook is now shipping as part of Chef 14\. With the inclusion of this resource into Chef itself we are now deprecating this cookbook. It will continue to function for Chef 13 users, but will not be updated.
+
 ## v2.2.1 (2018-03-15)
 
 - Fix #60, incorrect permissions on `set_permissions`
