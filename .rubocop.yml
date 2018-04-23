@@ -1,0 +1,11 @@
+Metrics/AbcSize:
+  Max: 25
+
+Metrics/LineLength:
+  Max: 300
+
+Metrics/MethodLength:
+  Max: 11
+
+Metrics/ModuleLength:
+  Max: 108

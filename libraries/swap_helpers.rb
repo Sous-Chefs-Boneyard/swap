@@ -1,4 +1,6 @@
+# Group the swap methods
 module SwapCookbook
+  # Utility methods
   module Helpers
     def do_create(command)
       create_swapfile(command)
@@ -102,7 +104,7 @@ module SwapCookbook
     end
 
     def compatible_filesystem?
-      compatible_filesystems = %w(xfs ext4)
+      compatible_filesystems = %w[xfs ext4]
       parent_directory = ::File.dirname(new_resource.path)
       # Get FS info, get second line as first is column headings
       command = "df -PT #{parent_directory} | awk 'NR==2 {print $2}'"
@@ -113,7 +115,7 @@ module SwapCookbook
 
     # we can remove this when we only support Chef 13
     def docker?(node = run_context.nil? ? nil : run_context.node)
-      !!(node && node['virtualization'] && node['virtualization']['systems'] &&
+      (node && node['virtualization'] && node['virtualization']['systems'] &&
          node['virtualization']['systems']['docker'] && node['virtualization']['systems']['docker'] == 'guest')
     end
 

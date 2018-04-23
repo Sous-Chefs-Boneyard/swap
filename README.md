@@ -1,5 +1,7 @@
 The swap resource from this cookbook is now shipping as part of Chef 14\. With the inclusion of this resource into Chef itself we are now deprecating this cookbook. It will continue to function for Chef 13 users, but will not be updated.
 
+This version of the cookbook is a Nordstrom fork.  We add the swap_partition code.
+
 # Swap Cookbook
 
 [![Build Status](https://travis-ci.org/sous-chefs/swap.svg?branch=master)](https://travis-ci.org/sous-chefs/swap) [![Cookbook Version](https://img.shields.io/cookbook/v/swap.svg)](https://supermarket.chef.io/cookbooks/swap)
@@ -33,7 +35,12 @@ swap_file '/mnt/swap' do
 end
 ```
 
-Or remove an existing one:
+```ruby
+swap_partition '/dev/mapper/volumegrou-logicalvolume' do
+end
+```
+
+Or remove an existing file:
 
 ```ruby
 swap_file '/mnt/swap' do
@@ -41,7 +48,7 @@ swap_file '/mnt/swap' do
 end
 ```
 
-### LWRP Attributes
+### swap_file LWRP Attributes
 
 Attribute | Description                                 | Example   | Default
 --------- | ------------------------------------------- | --------- | -------
@@ -49,6 +56,13 @@ path      | The path to put the swap file on the system | /mnt/swap |
 size      | The size (in MBs) for the swap file         | 2048      |
 persist   | Persist the swapon                          | true      | false
 timeout   | Timeout for dd/fallocate                    | 600       | 600
+
+### swap_partition LWRP Attributes
+
+Attribute | Description                                 | Example   | Default
+--------- | ------------------------------------------- | --------- | -------
+path      | The path to put the swap file on the system | /dev/mapper/<logicalvolume> |
+persist   | Persist the swapon                          | true      | false
 
 ## Installation
 
@@ -58,7 +72,7 @@ If you're using [berkshelf](https://github.com/RiotGames/berkshelf), add `swap` 
 cookbook 'swap'
 ```
 
-Otherwise, install the cookbook from the community site:
+Otherwise, install the cookbook from the nordstrom git repo.
 
 ```
 knife cookbook site install swap
