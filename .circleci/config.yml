@@ -1,0 +1,29 @@
+version: 2.1
+
+orbs:
+  kitchen: sous-chefs/kitchen@1.0.0
+
+workflows:
+  kitchen:
+    jobs:
+      - kitchen/danger:
+          name: danger
+          context: Danger
+      - kitchen/lint:
+          name: lint
+      # - kitchen/dokken:
+      #     name: create
+      #     suite: create
+      #     requires: [  danger, lint ]
+      # - kitchen/dokken:
+      #     name: create-swappiness
+      #     suite: create-swappiness
+      #     requires: [  danger, lint ]
+      # - kitchen/dokken:
+      #     name: persist
+      #     suite: persist
+      #     requires: [  danger, lint ]
+      # - kitchen/dokken:
+      #     name: remove
+      #     suite: remove
+      #     requires: [  danger, lint ]
