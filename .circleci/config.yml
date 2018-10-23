@@ -12,6 +12,18 @@ workflows:
       - kitchen/lint:
           name: lint
       - kitchen/dokken:
-          name: default
-          suite: default
+          name: create
+          suite: create
+          requires: [  danger, lint ]
+      - kitchen/dokken:
+          name: create-swappiness
+          suite: create-swappiness
+          requires: [  danger, lint ]
+      - kitchen/dokken:
+          name: persist
+          suite: persist
+          requires: [  danger, lint ]
+      - kitchen/dokken:
+          name: remove
+          suite: remove
           requires: [  danger, lint ]
