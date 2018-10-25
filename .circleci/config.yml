@@ -11,6 +11,7 @@ workflows:
           context: Danger
       - kitchen/lint:
           name: lint
+<<<<<<< HEAD
       # - kitchen/dokken:
       #     name: create
       #     suite: create
@@ -27,3 +28,21 @@ workflows:
       #     name: remove
       #     suite: remove
       #     requires: [  danger, lint ]
+=======
+      - kitchen/dokken:
+          name: create
+          suite: create
+          requires: [  danger, lint ]
+      - kitchen/dokken:
+          name: create-swappiness
+          suite: create-swappiness
+          requires: [  danger, lint ]
+      - kitchen/dokken:
+          name: persist
+          suite: persist
+          requires: [  danger, lint ]
+      - kitchen/dokken:
+          name: remove
+          suite: remove
+          requires: [  danger, lint ]
+>>>>>>> 69ff06ffd0027210ceeafef40923edcaf94c8e4e
