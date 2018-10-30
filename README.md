@@ -2,7 +2,7 @@ The swap resource from this cookbook is now shipping as part of Chef 14\. With t
 
 # Swap Cookbook
 
-[![Build Status](https://travis-ci.org/sous-chefs/swap.svg?branch=master)](https://travis-ci.org/sous-chefs/swap) [![Cookbook Version](https://img.shields.io/cookbook/v/swap.svg)](https://supermarket.chef.io/cookbooks/swap)
+[![CircleCI](https://circleci.com/gh/sous-chefs/swap.svg?style=svg)](https://circleci.com/gh/sous-chefs/swap) [![Cookbook Version](https://img.shields.io/cookbook/v/swap.svg)](https://supermarket.chef.io/cookbooks/swap)
 
 This cookbook provides resource for easily creating and managing swap files.
 
